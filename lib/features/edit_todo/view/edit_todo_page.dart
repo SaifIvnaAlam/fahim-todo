@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/home/model/todo.dart';
+import 'package:todo/features/home/model/todo.dart';
 
 class EditTodoPage extends StatelessWidget {
   const EditTodoPage({super.key, required this.todo});
