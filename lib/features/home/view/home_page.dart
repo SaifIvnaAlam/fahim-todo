@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:todo/features/create_todo/view/create_todo_page.dart';
 import 'package:todo/features/edit_todo/view/edit_todo_page.dart';
@@ -10,18 +12,31 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
+
 }
 
 class _HomePageState extends State<HomePage> {
+  late List<Todo> todos;
+  @override
+  void initState() {
+    todos = dummyTodoData;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          Todo? todo = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const CreateTodoPage()),
           );
+
+          if (todo != null) {
+            setState(() {
+              todos.add(todo);
+            });
+          }
         },
         child: const Icon(Icons.add),
       ),
@@ -36,9 +51,9 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView.builder(
-          itemCount: dummyTodoData.length,
+          itemCount: todos.length,
           itemBuilder: (context, index) {
-            Todo data = dummyTodoData[index];
+            Todo data = todos[index];
             return GestureDetector(
               onTap: () {
                 Navigator.push(

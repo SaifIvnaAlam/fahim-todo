@@ -1,12 +1,16 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:todo/features/home/controller/todo_dummy_data.dart';
 import 'package:todo/features/home/model/todo.dart';
 
-class CreateTodoPage extends StatelessWidget {
+class CreateTodoPage extends StatefulWidget {
   const CreateTodoPage({super.key});
 
+  @override
+  State<CreateTodoPage> createState() => _CreateTodoPageState();
+}
+
+class _CreateTodoPageState extends State<CreateTodoPage> {
   @override
   Widget build(BuildContext context) {
     TextEditingController titleController = TextEditingController();
@@ -40,13 +44,10 @@ class CreateTodoPage extends StatelessWidget {
               color: Colors.deepPurple,
               child: MaterialButton(
                 onPressed: () {
-                  log("save todo pressed");
-                  log("UserInput title: ${titleController.text}");
-                  log("UserInput Description: ${descriptionController.text}");
                   Todo mytodoObject =
                       Todo(isDone: false, title: titleController.text, description: descriptionController.text);
-                  dummyTodoData.add(mytodoObject);
-                  Navigator.pop(context);
+                  
+                  Navigator.pop(context, mytodoObject);
                 },
                 child: const Text(
                   "Save Todo",
